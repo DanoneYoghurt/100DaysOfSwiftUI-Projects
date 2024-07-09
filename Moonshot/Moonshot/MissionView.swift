@@ -40,15 +40,17 @@ struct MissionView: View {
                     
                     CustomDivider()
                     
-                    Text("Mission Highlights")
-                        .font(.title.bold())
-                        .padding(.bottom, 5)
-                    
-                    Text("Launch date: \(mission.formattedMissionViewLaunchDate)")
-                        .font(.headline.bold())
-                        .padding(.bottom, 5)
-                    
-                    Text(mission.description)
+                    VStack(alignment: .leading) {
+                        Text("Mission Highlights")
+                            .font(.title.bold())
+                            .padding(.bottom, 5)
+                        
+                        Text("Launch date: \(mission.formattedMissionViewLaunchDate)")
+                            .font(.headline.bold())
+                            .padding(.bottom, 5)
+                        
+                        Text(mission.description)
+                    }
                     
                     CustomDivider()
                     

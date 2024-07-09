@@ -26,6 +26,9 @@ struct ExpensesView: View {
                     Spacer()
                     AmountView(amount: item.amount)
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("\(item.name), \(NSLocalizedString(item.type, comment: ""))")
+                .accessibilityHint(String(item.amount))
             }
             .onDelete(perform: removeItems)
         

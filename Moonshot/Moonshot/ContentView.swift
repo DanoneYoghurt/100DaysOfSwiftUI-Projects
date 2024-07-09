@@ -44,7 +44,8 @@ struct GridLayout: View {
                         .stroke(.lightBackground)
                     )
                 }
-                .navigationDestination(for: Mission.self) { _ in MissionView(mission: mission, astronauts: astronauts)
+                .navigationDestination(for: Mission.self) { mission in
+                    MissionView(mission: mission, astronauts: astronauts)
                 }
             }
             
@@ -86,7 +87,7 @@ struct ListLayout: View {
                     )
                     .padding(.horizontal)
                 }
-                .navigationDestination(for: Mission.self) { _ in
+                .navigationDestination(for: Mission.self) { mission in
                     MissionView(mission: mission, astronauts: astronauts)
                 }
             }
@@ -120,6 +121,7 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: showingGrid ? "rectangle.grid.1x2" : "rectangle.grid.2x2")
                             .foregroundStyle(.white)
+                            .accessibilityLabel(showingGrid ? "Show list view" : "rectangle.grid.2x2")
                     }
                 }
             }
