@@ -30,14 +30,14 @@ extension ContentView {
         }
         
         
-//        init() {
-//            do {
-//                let data = try Data(contentsOf: savePath)
-//                model = try JSONDecoder().decode(Persons.self, from: data)
-//            } catch {
+        init() {
+            do {
+                let data = try Data(contentsOf: savePath)
+                model = try JSONDecoder().decode(Persons.self, from: data)
+            } catch {
 //                model = []
-//                print(error.localizedDescription)
-//            }
-//        }
+                print(error.localizedDescription)
+            }
+        }
     }
 }

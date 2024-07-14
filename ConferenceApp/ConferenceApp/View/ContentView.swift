@@ -52,6 +52,9 @@ struct ContentView: View {
                         .onDelete(perform: viewModel.removeItems)
                     }
                     .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            EditButton()
+                        }
                         ToolbarItem(placement: .topBarTrailing) {
                             Button("Add a person", systemImage: "plus") {
                                 showAddView.toggle()

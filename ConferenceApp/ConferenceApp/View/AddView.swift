@@ -26,13 +26,22 @@ struct AddView: View {
                 if let photo = photo {
                     
                     
-                    viewModel.convertDataToImage(photo)
-                        .resizable()
-                        .scaledToFit()
+                    ScrollView {
+                        viewModel.convertDataToImage(photo)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                            .shadow(radius: 10)
+                            .padding()
+                        
+                        
+                        TextField("Enter the name", text: $description)
+                            .textFieldStyle(.roundedBorder)
+                            .padding(.horizontal)
+                    }
                     
-                    TextField("Enter the name", text: $description)
                 } else {
-                    PhotosPicker("Pick a photo", selection: $pickerItem)
+                    PhotosPicker("Pick a photo", selection: $pickerItem, matching: .images)
                 }
             }
             .onChange(of: pickerItem) {
@@ -55,13 +64,14 @@ struct AddView: View {
                             let newItem = Person(photo: photo, description: description)
                             
                             model.persons.append(newItem)
-//                            do {
-//                                let data = try JSONEncoder().encode(model.persons)
-//                                try data.write(to: URL.documentsDirectory.appending(path: "message"), options: .atomic, .completeFileProtection)
-//                            } catch {
-//                                print("unable to save")
+                            do {
+                                let data = try JSONEncoder().encode(model.persons)
+                                try data.write(to: URL.documentsDirectory.appending(path: "SavedPersons"), options: .atomic)
+                            } catch {
+                                print("unable to save")
+                                
                             }
-//                        }
+                        }
                         dismiss()
                     }
                     .disabled(photo == nil)
