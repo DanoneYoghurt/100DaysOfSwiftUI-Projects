@@ -33,7 +33,7 @@ struct ContentView: View {
                     List {
                         ForEach(viewModel.model.persons.sorted(), id: \.id) { item in
                             NavigationLink {
-                                DetailView(photo: viewModel.convertDataToImage(item.photo), description: item.description)
+                                DetailView(photo: viewModel.convertDataToImage(item.photo), description: item.description, latitude: item.latitude, longitude: item.longitude)
                             } label: {
                                 HStack {
                                     viewModel.convertDataToImage(item.photo)

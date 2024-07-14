@@ -19,6 +19,8 @@ struct Person: Identifiable, Codable, Comparable {
     var id = UUID()
     var photo: Data
     var description: String
+    var latitude: Double
+    var longitude: Double
     
     static func <(lhs: Person, rhs: Person) -> Bool {
             lhs.description < rhs.description

@@ -5,10 +5,15 @@
 //  Created by Антон Баскаков on 13.07.2024.
 //
 
+import CoreLocation
 import PhotosUI
 import SwiftUI
 
+
+
 struct AddView: View {
+    
+    
     
     @Environment(\.dismiss) var dismiss
     
@@ -57,8 +62,15 @@ struct AddView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         if let photo = photo {
+//                            viewModel.locationFetcher.start()
                             
-                            let newItem = Person(photo: photo, description: description)
+                            let coordinate = viewModel.locationFetcher.lastKnownLocation ?? CLLocationCoordinate2D(latitude: 54.1961, longitude: 37.6182)
+                            
+                            let latitude = Double(coordinate.latitude)
+                            let longitude = Double(coordinate.longitude)
+                            
+                            
+                            let newItem = Person(photo: photo, description: description, latitude: latitude, longitude: longitude)
                             
                             model.persons.append(newItem)
                             
@@ -70,6 +82,9 @@ struct AddView: View {
                     .bold()
                 }
             }
+        }
+        .onAppear {
+            viewModel.locationFetcher.start()
         }
         
     }
