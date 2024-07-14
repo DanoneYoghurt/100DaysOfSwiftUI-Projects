@@ -21,6 +21,8 @@ extension ContentView {
         
         func removeItems(at offsets: IndexSet) {
             model.persons.remove(atOffsets: offsets)
+            
+            save(model)
         }
         
         func convertDataToImage(_ data: Data) -> Image {
@@ -29,13 +31,23 @@ extension ContentView {
             return result
         }
         
+        func save(_ model: Persons) {
+            do {
+                let data = try JSONEncoder().encode(model)
+                try data.write(to: URL.documentsDirectory.appending(path: "SavedPersons"), options: .atomic)
+            } catch {
+                print("unable to save")
+                
+            }
+        }
+        
         
         init() {
             do {
                 let data = try Data(contentsOf: savePath)
                 model = try JSONDecoder().decode(Persons.self, from: data)
             } catch {
-//                model = []
+                //                model = []
                 print(error.localizedDescription)
             }
         }

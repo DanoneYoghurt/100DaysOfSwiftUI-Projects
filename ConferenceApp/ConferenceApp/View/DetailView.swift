@@ -14,7 +14,6 @@ struct DetailView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
                 photo
                     .resizable()
                     .scaledToFit()
@@ -25,7 +24,7 @@ struct DetailView: View {
                     .padding(.top, 7)
                     .fontWeight(.bold)
                     .font(.title2)
-            }
+            
             .navigationTitle("Details")
             .navigationBarTitleDisplayMode(.inline)
         }

@@ -15,7 +15,7 @@ class Persons: Codable {
     var persons = [Person]()
 }
 
-struct Person: Identifiable, Codable {
+struct Person: Identifiable, Codable, Comparable {
     var id = UUID()
     var photo: Data
     var description: String

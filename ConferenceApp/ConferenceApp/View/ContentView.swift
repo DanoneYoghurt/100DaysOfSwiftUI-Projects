@@ -31,7 +31,7 @@ struct ContentView: View {
                     }
                 } else {
                     List {
-                        ForEach(viewModel.model.persons) { item in
+                        ForEach(viewModel.model.persons.sorted(), id: \.id) { item in
                             NavigationLink {
                                 DetailView(photo: viewModel.convertDataToImage(item.photo), description: item.description)
                             } label: {
@@ -40,6 +40,7 @@ struct ContentView: View {
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 30, height: 30)
+                                        .clipped()
                                         .padding(.vertical, 5)
                                     
                                     Spacer()

@@ -22,7 +22,15 @@ extension AddView {
             return result
         }
         
-
+        func save(_ model: Persons) {
+            do {
+                let data = try JSONEncoder().encode(model)
+                try data.write(to: URL.documentsDirectory.appending(path: "SavedPersons"), options: .atomic)
+            } catch {
+                print("unable to save")
+                
+            }
+        }
         
     }
     

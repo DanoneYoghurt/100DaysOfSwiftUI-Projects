@@ -25,7 +25,6 @@ struct AddView: View {
             VStack {
                 if let photo = photo {
                     
-                    
                     ScrollView {
                         viewModel.convertDataToImage(photo)
                             .resizable()
@@ -59,18 +58,11 @@ struct AddView: View {
                     Button("Save") {
                         if let photo = photo {
                             
-                            
-                            
                             let newItem = Person(photo: photo, description: description)
                             
                             model.persons.append(newItem)
-                            do {
-                                let data = try JSONEncoder().encode(model.persons)
-                                try data.write(to: URL.documentsDirectory.appending(path: "SavedPersons"), options: .atomic)
-                            } catch {
-                                print("unable to save")
-                                
-                            }
+                            
+                            viewModel.save(model)
                         }
                         dismiss()
                     }
@@ -79,7 +71,9 @@ struct AddView: View {
                 }
             }
         }
+        
     }
+    
 }
 
 
