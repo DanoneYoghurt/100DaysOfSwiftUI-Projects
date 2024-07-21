@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Prospect {
+class Prospect: Comparable {
     var name: String
     var emailAddress: String
     var isContacted: Bool
@@ -18,5 +18,10 @@ class Prospect {
         self.name = name
         self.emailAddress = emailAddress
         self.isContacted = isContacted
+    }
+    
+    
+    static func <(lhs: Prospect, rhs: Prospect) -> Bool {
+        lhs.name > rhs.name
     }
 }

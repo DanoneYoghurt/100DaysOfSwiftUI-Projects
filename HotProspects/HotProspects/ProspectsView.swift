@@ -34,15 +34,26 @@ struct ProspectsView: View {
     @Environment(\.modelContext) var modelContext
     @State private var isShowingScanner = false
     @State private var selectedProspects = Set<Prospect>()
+    @State private var sortedByName = false
     
     var body: some View {
         NavigationStack {
-            List(prospects, selection: $selectedProspects) { prospect in
-                VStack(alignment: .leading) {
-                    Text(prospect.name)
-                        .font(.headline)
-                    Text(prospect.emailAddress)
-                        .foregroundStyle(.secondary)
+            List(sortedByName ? prospects.sorted(by: <) : prospects, selection: $selectedProspects) { prospect in
+                NavigationLink {
+                    EditView(prospect: prospect)
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            Text(prospect.emailAddress)
+                                .foregroundStyle(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        prospect.isContacted ? Image(systemName: "checkmark") : Image(systemName: "xmark")
+                    }
                 }
                 .swipeActions {
                     Button("Delete", systemImage: "trash", role: .destructive) {
@@ -72,6 +83,12 @@ struct ProspectsView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         EditButton()
+                    }
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(sortedByName ? "Sort by date added" : "Sort by name") {
+                            sortedByName.toggle()
+                        }
                     }
                     
                     if selectedProspects.isEmpty == false {
