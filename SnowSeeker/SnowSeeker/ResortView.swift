@@ -21,9 +21,19 @@ struct ResortView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Image(decorative: resort.id)
-                    .resizable()
+                ZStack(alignment: .bottomTrailing) {
+                    Image(decorative: resort.id)
+                        .resizable()
                     .scaledToFit()
+                        Text("Image credit: \(resort.imageCredit)")
+                        .font(.caption)
+                        .foregroundStyle(.white)
+                        .padding(5)
+                        .background(.black.opacity(0.7))
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .padding(5)
+                }
+                
                 
                 HStack {
                     if horizontalSizeClass == .compact && dynamicTypeSize > .large {

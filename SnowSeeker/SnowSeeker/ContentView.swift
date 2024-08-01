@@ -11,6 +11,8 @@ struct ContentView: View {
     
     @State private var searchText = ""
     @State private var favorites = Favorites()
+    @State private var sortOrderSelection = "Default"
+    let sortOrder = ["Default", "Alphabetical", "Country"]
     
     let resorts: [Resort] = Bundle.main.decode("resorts.json")
     
@@ -22,9 +24,24 @@ struct ContentView: View {
         }
     }
     
+    var sortedResorts: [Resort] {
+        switch sortOrderSelection {
+        case "Alphabetical":
+            return filteredResorts.sorted {
+                $0.name < $1.name
+            }
+        case "Country":
+            return filteredResorts.sorted {
+                $0.country < $1.country
+            }
+        default:
+            return filteredResorts
+        }
+    }
+    
     var body: some View {
         NavigationSplitView {
-            List(filteredResorts) { resort in
+            List(sortedResorts) { resort in
                 NavigationLink(value: resort) {
                     HStack {
                         Image(resort.country)
@@ -35,8 +52,8 @@ struct ContentView: View {
                                 .rect(cornerRadius: 5)
                             )
                             .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(.black, lineWidth: 1)
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(.black, lineWidth: 1)
                             )
                         
                         VStack(alignment: .leading) {
@@ -56,7 +73,18 @@ struct ContentView: View {
                 }
                 
             }
-            
+            .toolbar {
+                Menu("Sort order", systemImage: "arrow.up.arrow.down") {
+                    Picker("Sort order", selection: $sortOrderSelection) {
+                        Text("Default")
+                            .tag("Default")
+                        Text("Alphabetical")
+                            .tag("Alphabetical")
+                        Text("Country")
+                            .tag("Country")
+                    }
+                }
+            }
             .navigationTitle("Resorts")
             .navigationDestination(for: Resort.self) { resort in
                 ResortView(resort: resort)
@@ -68,6 +96,7 @@ struct ContentView: View {
         .environment(favorites)
     }
 }
+
 
 #Preview {
     ContentView()
